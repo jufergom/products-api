@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -27,8 +26,4 @@ func main() {
 	r.HandleFunc("/api/products", productHandler.GetAllProducts).Methods("GET")
 	r.HandleFunc("/api/products/{id}", productHandler.GetProductByID).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", r))
-}
-
-func Hello(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintln(w, "Hello world!")
 }
