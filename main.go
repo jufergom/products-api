@@ -8,6 +8,8 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jufergom/products-api/internal/database"
+	"github.com/jufergom/products-api/internal/handler"
+	"github.com/jufergom/products-api/internal/repository"
 )
 
 func main() {
@@ -17,13 +19,13 @@ func main() {
 		log.Fatal("Error connecting to MongoDB:", err)
 	}
 
-	coll := db.Collection("product")
-	fmt.Println(coll)
+	productRepository := repository.NewRepository(db)
+	productHandler := handler.NewHandler(productRepository)
 
 	log.Println("Server starting")
 	r := mux.NewRouter()
-	r.HandleFunc("/", Hello)
-	http.Handle("/", r)
+	r.HandleFunc("/api/products", productHandler.GetAllProducts).Methods("GET")
+	r.HandleFunc("/api/products/{id}", productHandler.GetProductByID).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
 

@@ -12,7 +12,7 @@ func Connect(uri string) (*mongo.Database, error) {
 		return nil, err
 	}
 
-	db := client.Database("products-catalog")
+	db := client.Database("catalog")
 
 	return db, nil
 }
