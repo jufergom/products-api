@@ -12,7 +12,7 @@ type ProductRepository struct {
 	Collection *mongo.Collection
 }
 
-func NewRepository(db *mongo.Database) *ProductRepository {
+func NewProductRepository(db *mongo.Database) *ProductRepository {
 	return &ProductRepository{Collection: db.Collection("products")}
 }
 

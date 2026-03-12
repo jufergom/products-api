@@ -12,11 +12,10 @@ type ProductHandler struct {
 	Repository *repository.ProductRepository
 }
 
-func NewHandler(repository *repository.ProductRepository) *ProductHandler {
+func NewProductHandler(repository *repository.ProductRepository) *ProductHandler {
 	return &ProductHandler{Repository: repository}
 }
 
-// Endpoint: GET /products
 func (h *ProductHandler) GetAllProducts(w http.ResponseWriter, r *http.Request) {
 	products, err := h.Repository.FindAll()
 	if err != nil {
@@ -26,7 +25,6 @@ func (h *ProductHandler) GetAllProducts(w http.ResponseWriter, r *http.Request) 
 	json.NewEncoder(w).Encode(products)
 }
 
-// Endpoint: GET /products/{id}
 func (h *ProductHandler) GetProductByID(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 	product, err := h.Repository.FindByID(id)

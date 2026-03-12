@@ -18,12 +18,17 @@ func main() {
 		log.Fatal("Error connecting to MongoDB:", err)
 	}
 
-	productRepository := repository.NewRepository(db)
-	productHandler := handler.NewHandler(productRepository)
+	productRepository := repository.NewProductRepository(db)
+	productHandler := handler.NewProductHandler(productRepository)
+
+	customerRepository := repository.NewCustomerRepository(db)
+	customerHandler := handler.NewCustomerHandler(customerRepository)
 
 	log.Println("Server starting")
 	r := mux.NewRouter()
 	r.HandleFunc("/api/products", productHandler.GetAllProducts).Methods("GET")
 	r.HandleFunc("/api/products/{id}", productHandler.GetProductByID).Methods("GET")
+	r.HandleFunc("/api/customers", customerHandler.GetAllCustomers).Methods("GET")
+	r.HandleFunc("/api/customers/{id}", customerHandler.GetCustomerByID).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
