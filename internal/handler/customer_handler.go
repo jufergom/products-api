@@ -22,6 +22,7 @@ func (h *CustomerHandler) GetAllCustomers(w http.ResponseWriter, r *http.Request
 		http.Error(w, "Error fetching customers", http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(customers)
 }
 
@@ -32,5 +33,6 @@ func (h *CustomerHandler) GetCustomerByID(w http.ResponseWriter, r *http.Request
 		http.Error(w, "Customer not found", http.StatusNotFound)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(customer)
 }
